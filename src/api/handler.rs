@@ -1,19 +1,24 @@
-use async_graphql::{http::GraphiQLSource, Schema};
-use actix_web::{HttpResponse, http::header::HeaderMap, web, HttpRequest};
-use async_graphql_actix_web::{GraphQLRequest, GraphQLResponse, GraphQLSubscription};
-use serde::Deserialize;
 use super::graphql::schema::SampleSchema;
 use super::header::Headers;
+use actix_web::{http::header::HeaderMap, web, HttpRequest, HttpResponse};
+use async_graphql::{http::GraphiQLSource, Schema};
+use async_graphql_actix_web::{GraphQLRequest, GraphQLResponse, GraphQLSubscription};
+use serde::Deserialize;
 
 fn get_token_from_headers(headers: &HeaderMap) -> Option<Headers> {
-    headers
-        .get("token")
-        .and_then(|value| value.to_str().map(|s| Headers {
-            token: s.to_string()
-        }).ok())
+    headers.get("token").and_then(|value| {
+        value
+            .to_str()
+            .map(|s| Headers {
+                token: s.to_string(),
+            })
+            .ok()
+    })
 }
 
-async fn on_connection_init(value: serde_json::Value) -> async_graphql::Result<async_graphql::Data> {
+async fn on_connection_init(
+    value: serde_json::Value,
+) -> async_graphql::Result<async_graphql::Data> {
     #[derive(Deserialize, Debug)]
     struct Payload {
         token: String,
@@ -23,7 +28,9 @@ async fn on_connection_init(value: serde_json::Value) -> async_graphql::Result<a
     // validate the token exists in the headers.
     if let Ok(payload) = serde_json::from_value::<Payload>(value) {
         let mut data = async_graphql::Data::default();
-        data.insert(Headers { token: payload.token });
+        data.insert(Headers {
+            token: payload.token,
+        });
         Ok(data)
     } else {
         Err("token is required".into())

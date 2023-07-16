@@ -3,13 +3,23 @@
 mod api;
 mod database;
 
-use actix_web::{guard, web::{self}, App, HttpServer};
-use crate::api::handler::{graphiql, index, index_ws};
 use crate::api::graphql::schema::generate_schema;
+use crate::api::handler::{graphiql, index, index_ws};
+use actix_web::{
+    guard,
+    web::{self},
+    App, HttpServer,
+};
+use tracing_subscriber::FmtSubscriber;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let schema = generate_schema().await.unwrap();
+    let subscriber = FmtSubscriber::builder()
+        .with_max_level(tracing::Level::DEBUG) // todo: 環境変数で渡す.
+        .finish();
+    tracing::subscriber::set_global_default(subscriber).expect("Failed to set logger");
+
+    let schema = generate_schema().await.expect("Failed genarate schema.");
 
     println!("GraphiQL IDE: http://localhost:8000");
 

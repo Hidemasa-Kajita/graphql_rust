@@ -1,4 +1,7 @@
-use async_graphql::{Subscription, Context, futures_util::{Stream, self}};
+use async_graphql::{
+    futures_util::{self, Stream},
+    Context, Subscription,
+};
 
 use super::header::Headers;
 
