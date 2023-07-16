@@ -1,6 +1,7 @@
 // see: https://github.com/async-graphql/examples/tree/master/actix-web
 
 mod api;
+mod database;
 
 use actix_web::{guard, web::{self}, App, HttpServer};
 use crate::api::handler::{graphiql, index, index_ws};
@@ -8,7 +9,7 @@ use crate::api::graphql::schema::generate_schema;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let schema = generate_schema();
+    let schema = generate_schema().await.unwrap();
 
     println!("GraphiQL IDE: http://localhost:8000");
 

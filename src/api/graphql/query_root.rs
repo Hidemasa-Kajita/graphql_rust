@@ -20,6 +20,8 @@ pub struct QueryRoot;
 #[Object]
 impl QueryRoot {
     async fn current_token<'a>(&self, ctx: &'a Context<'_>) -> Option<&'a str> {
+        let pool = ctx.data_unchecked::<crate::database::connect::DBPool>();
+        println!("{:?}", pool);
         ctx.data_opt::<Headers>().map(|header| header.token.as_str())
     }
     // async fn user(&self, id: usize) -> User {
