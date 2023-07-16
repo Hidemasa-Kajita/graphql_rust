@@ -1,0 +1,17 @@
+[package]
+name = "rust_pr"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = "1.0.171"
+serde_json = "1.0.102"
+actix-web = "4.3.1"
+async-graphql = "5.0.10"
+async-graphql-actix-web = "5.0.10"
+sqlx = "0.7.1"
+
+[dev-dependencies]
+test-case = "3.1.0"
