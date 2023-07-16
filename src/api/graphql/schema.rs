@@ -1,6 +1,5 @@
 use super::{
-    query_root::{QueryRoot, UserLoader},
-    subscription_root::SubscriptionRoot,
+    query_root::QueryRoot, subscription_root::SubscriptionRoot, users::dataloader::UserLoader,
 };
 use async_graphql::{dataloader::DataLoader, EmptyMutation, Schema};
 
@@ -10,11 +9,13 @@ pub async fn generate_schema() -> Result<SampleSchema, sqlx::Error> {
     let pool = crate::database::connect::connect()
         .await
         .expect("Failed connect database.");
-    Ok(Schema::build(QueryRoot, EmptyMutation, SubscriptionRoot)
-        .data(pool.clone())
-        .data(DataLoader::new(
-            UserLoader { pool: pool.clone() },
-            tokio::spawn,
-        ))
-        .finish())
+    Ok(
+        Schema::build(QueryRoot::default(), EmptyMutation, SubscriptionRoot)
+            .data(pool.clone())
+            .data(DataLoader::new(
+                UserLoader { pool: pool.clone() },
+                tokio::spawn,
+            ))
+            .finish(),
+    )
 }
