@@ -9,13 +9,14 @@ edition = "2021"
 serde = "1.0.171"
 serde_json = "1.0.102"
 actix-web = "4.3.1"
-async-graphql = "5.0.10"
+async-graphql = { version = "5.0.10", features = ["dataloader"] }
 async-graphql-actix-web = "5.0.10"
 sqlx = { version = "0.7.1", features = [ "runtime-tokio-rustls", "postgres", "chrono" ] }
 tokio = { version = "1.29.1", features = ["full"] }
 tracing-subscriber = "0.3.17"
 tracing = "0.1.37"
 log = "0.4.19"
+chrono = "0.4.26"
 
 [dev-dependencies]
 test-case = "3.1.0"
