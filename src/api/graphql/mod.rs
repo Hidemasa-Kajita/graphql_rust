@@ -1,3 +1,5 @@
+use self::resolvers::posts::queries::PostQuery;
+
 use super::graphql::resolvers::users::queries::UserQuery;
 use async_graphql::MergedObject;
 
@@ -9,4 +11,4 @@ pub mod schema;
 mod subscription_root;
 
 #[derive(MergedObject, Default)]
-pub struct QueryRoot(UserQuery);
+pub struct QueryRoot(UserQuery, PostQuery);
