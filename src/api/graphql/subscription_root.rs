@@ -5,6 +5,7 @@ use async_graphql::{
 
 use super::header::Headers;
 
+// todo: mod.rs に移動予定.
 pub struct SubscriptionRoot;
 
 #[Subscription]

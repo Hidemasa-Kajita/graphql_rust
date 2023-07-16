@@ -2,7 +2,7 @@ use crate::database::connect::DBPool;
 
 use async_graphql::*;
 
-use crate::api::graphql::users::object::User;
+use crate::api::graphql::objects::users::User;
 
 #[derive(Default)]
 struct GetUserByIdQuery;
@@ -12,7 +12,7 @@ pub struct GetUsersQuery;
 
 #[Object]
 impl GetUsersQuery {
-    async fn users<'a>(&self, ctx: &'a Context<'_>) -> Result<Vec<User>, async_graphql::Error> {
+    async fn get_users<'a>(&self, ctx: &'a Context<'_>) -> Result<Vec<User>, async_graphql::Error> {
         let pool = ctx.data_unchecked::<DBPool>();
 
         Ok(sqlx::query_as::<_, (i32,)>("select id from users")

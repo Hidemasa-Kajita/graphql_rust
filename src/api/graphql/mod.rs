@@ -1,5 +1,12 @@
+use super::graphql::resolvers::users::queries::UserQuery;
+use async_graphql::MergedObject;
+
+mod dataloader;
 mod header;
-mod query_root;
+mod objects;
+mod resolvers;
 pub mod schema;
 mod subscription_root;
-mod users;
+
+#[derive(MergedObject, Default)]
+pub struct QueryRoot(UserQuery);

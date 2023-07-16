@@ -1,4 +1,4 @@
-use super::dataloader::UserLoader;
+use crate::api::graphql::dataloader::users::UserLoader;
 use async_graphql::dataloader::*;
 use async_graphql::*;
 

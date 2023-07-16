@@ -1,6 +1,5 @@
-use super::{
-    query_root::QueryRoot, subscription_root::SubscriptionRoot, users::dataloader::UserLoader,
-};
+use super::dataloader::users::UserLoader;
+use super::{subscription_root::SubscriptionRoot, QueryRoot};
 use async_graphql::{dataloader::DataLoader, EmptyMutation, Schema};
 
 pub type SampleSchema = Schema<QueryRoot, EmptyMutation, SubscriptionRoot>;
